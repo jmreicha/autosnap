@@ -6,9 +6,7 @@ snapshots.  Used for managing AWS backups and managing the snapshot lifecyle.
 ###Configurtion
 
 You will need to create a default config in the root of this directory called
-`.config` with your AWS account info.
-
-similar to the following:
+`.config` that contains the following AWS account info.
 
 ```
 region = us-west-1
@@ -30,6 +28,11 @@ in the root of this project in a file called `.config`.
 selecting your user account then `My Account`.  Under account settings there
 should be an `Account ID` which corresponds to the owner ID.
 
-###Usage
+###TODO
 
+* Error checking
+* Logging
+* Ability to automatically generate config
+* Ability to create AMI from snapshot
+* Command line support
 
