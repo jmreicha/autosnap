@@ -1,9 +1,9 @@
 #AWS snapshot tool
 
-A simple command line tool to for taking and managing AWS volumes and
-snapshots.  Used for managing AWS backups and managing the snapshot lifecyle.
+A simple command line tool to for managing AWS volumes and
+snapshots.
 
-###Configurtion
+###Configuration
 
 You will need to create a default config in the root of this directory called
 `.config` that contains the following AWS account info.
@@ -28,6 +28,10 @@ in the root of this project in a file called `.config`.
 selecting your user account then `My Account`.  Under account settings there
 should be an `Account ID` which corresponds to the owner ID.
 
+###Contributing
+
+Anybody is welcome to contribute to this project.
+
 ###TODO
 
 * Error checking
@@ -35,4 +39,8 @@ should be an `Account ID` which corresponds to the owner ID.
 * Ability to automatically generate config
 * Ability to create AMI from snapshot
 * Command line support
+
+###License
+
+This project is licensed under the MIT licencse.  See LICENSE for full details.
 
