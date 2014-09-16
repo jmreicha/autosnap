@@ -25,6 +25,7 @@ expiration_date = int(datetime.date.today().strftime("%j")) + 7
 
 volumes = conn.get_all_volumes()
 snapshots = conn.get_all_snapshots(filters={'volume-id': volume.id})
+tags = conn.get_all_tags()
 
 # Debugging
 # print "press 'c' when you are done with debugging"
@@ -40,14 +41,28 @@ def manage_all_vols(volumes):
     """Manage all volumes in region"""
 
     print 'Adding volumes to autosnap'
+    vol_count = 0
 
     # Skip if tagged already
     for volume in volumes:
-        for tag in tags:
-            if tag.name.startswith('is_managed'):
-                pass
-            else:
-                volume.add_tag('is_managed', True)
+        if not volume.tags:
+            volume.add_tag('is_managed', True)
+            vol_count = vol_count + 1
+            continue
+        managed = False
+        for tag in volume.tags:
+            if tag == 'is_managed':
+                managed = True
+                break
+        if not managed:
+            volume.add_tag('is_managed', True)
+
+    if vol_count > 0:
+        if vol_count = 1:
+            print str(vol_count) + ' volume added to autosnap'
+        else:
+            print str(vol_count) + ' volumes added to autosnap'
+
     return
 
 def unmanage_single_vol(volume):

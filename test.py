@@ -32,41 +32,54 @@ print "dir\n"
 print dir(volumes)
 print "dict\n"
 print volumes.__dict__
+print tags
 '''
 
-def unmanage_all_vols(volumes):
-    """Unmanage all volumes in region"""
+def test_vols(volumes):
+    """Manage all volumes in region"""
 
-    print 'Removing volumes from autosnap'
+    print 'Adding volumes to autosnap'
 
-    # Don't add tag to volumes that have it already
+    # Skip if tagged already
     for volume in volumes:
         for tag in tags:
-            if tag.name.startswith('is_managed'):
-                volume.remove_tag('is_managed')
+            print volume.tags
+            print tag.name.startswith('is_managed')
+            print volume.__dict__
+            print "press 'c' when you are done with debugging"
+            import pdb ; pdb.set_trace()  # breakpoint
     return
 
-unmanage_all_vols(volumes)
+def manage_all_vols(volumes):
+
+    vol_count = 0
+
+    for volume in volumes:
+        if not volume.tags:
+            volume.add_tag('is_managed', True)
+            vol_count = vol_count + 1
+            continue
+        managed = False
+        for tag in volume.tags:
+            if tag == 'is_managed':
+                managed = True
+                break
+        if not managed:
+            volume.add_tag('is_managed', True)
+    if vol_count > 0:
+        if vol_count = 1:
+            print str(vol_count) + ' volume added to autosnap'
+        else:
+            print str(vol_count) + ' volumes added to autosnap'
+
+    return
+
+
+manage_all_vols(volumes)
 
 '''
 # Date stuff
 current_date = datetime.date.today().strftime("%j")
 expiration_date = int(datetime.date.today().strftime("%j")) + 7
-
-first_snapshot = snapshots[0] #  first item in list
-first_volume = volumes[0] #  first item in list
-#first_volume.add_tag('is_managed', True)
-
-# Debugging
-
-#print volumes
-#print first_volume
-#print first_volume.tags
-#print volumes
-#print dir(first_snapshot)
-#print dir(volumes)
-#print first_snapshot.__dict__
-#print volumes.__dict__
-# print "press 'c' when you are done with debugging"
-# import pdb ; pdb.set_trace()  # breakpoint once we've established our obj
 '''
+
