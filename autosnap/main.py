@@ -117,10 +117,12 @@ def filter_vol_by_tag(volumes):
     """Filter volumes based on tags"""
     return
 
+def vol_in_arrary(vol):
+    """Check to see if vol is part of an array"""
+    return
+
 # When a snapshot gets created, add a 'date_created' tag
 first_snapshot.add_tag('date_created', "{0}".format(current_date))
-
-# Is volume part of an array?
 
 ### Snapshot level
 
