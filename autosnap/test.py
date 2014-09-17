@@ -101,8 +101,27 @@ def unmanage_all_vols(volumes):
 
     return
 
-unmanage_all_vols(volumes)
+def list_managed_vols(volumes):
+    """Enumerate managed volumes in region"""
+
+    managed_count = 0
+
+    for volume in volumes:
+        for tag in volume.tags:
+            if tag == 'is_managed':
+                managed = True
+                managed_count = managed_count + 1
+            if managed:
+                print 'Volume ID: ' + str(volume.id) + 'Volume tags: ' + str(volume.tags)
+
+    print str(managed_count) + ' total volumes managed'
+
+    return
+
+
 #manage_all_vols(volumes)
+list_managed_vols(volumes)
+#unmanage_all_vols(volumes)
 
 '''
 # Date stuff

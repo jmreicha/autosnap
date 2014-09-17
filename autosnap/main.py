@@ -1,3 +1,4 @@
+'''Autosnap - volume and snapshot lifecycle management tool'''
 
 import boto.ec2
 import datetime
@@ -95,19 +96,23 @@ def unmanage_all_vols(volumes):
             print str(vol_count) + ' volumes removed from autosnap'
 
     return
+
 def list_managed_vols(volumes):
     """Enumerate managed volumes in region"""
 
-    count = 0
+    managed_count = 0
 
     for volume in volumes:
-        if volume.get_key_pair('is_managed') == True:
-            print volume, volume.id, volume.tags
-            count += count + 1
+        for tag in volume.tags:
+            if tag == 'is_managed':
+                managed = True
+                managed_count = managed_count + 1
+            if managed:
+                print 'Volume ID: ' + str(volume.id) + 'Volume tags: ' + str(volume.tags)
 
-    print count + " total volumes managed"
+    print str(managed_count) + ' total volumes managed'
+
     return
-
 def filter_vol_by_tag(volumes):
     """Filter volumes based on tags"""
     return
