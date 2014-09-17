@@ -73,14 +73,28 @@ def unmanage_all_vols(volumes):
     """Unmanage all volumes in region"""
 
     print 'Removing volumes from autosnap'
+    vol_count = 0
 
     # Only remove tagged vols
     for volume in volumes:
-        for tag in tags:
-            if tag.name.startswith('is_managed'):
-                volume.remove_tag('is_managed')
-    return
+        if volume.tags:
+            volume.remove_tag('is_managed', True)
+            vol_count = vol_count + 1
+            continue
+        managed = True
+        for tag in volume.tags:
+            if tag == 'is_managed':
+                managed = False
+                break
+        if managed:
+            volume.remove_tag('is_managed', True)
+    if vol_count > 0:
+        if vol_count == 1:
+            print str(vol_count) + ' volume removed from autosnap'
+        else:
+            print str(vol_count) + ' volumes removed from autosnap'
 
+    return
 def list_managed_vols(volumes):
     """Enumerate managed volumes in region"""
 

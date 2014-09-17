@@ -5,7 +5,7 @@ import datetime
 import ConfigParser
 
 # Config
-config_file = '.config'
+config_file = '../.config'
 config = ConfigParser.ConfigParser()
 config.read(config_file)
 
@@ -67,15 +67,42 @@ def manage_all_vols(volumes):
         if not managed:
             volume.add_tag('is_managed', True)
     if vol_count > 0:
-        if vol_count = 1:
+        if vol_count == 1:
             print str(vol_count) + ' volume added to autosnap'
         else:
             print str(vol_count) + ' volumes added to autosnap'
 
     return
 
+def unmanage_all_vols(volumes):
+    """Manage all volumes in region"""
 
-manage_all_vols(volumes)
+    print 'Removing volumes from autosnap'
+    vol_count = 0
+
+    # Only remove tagged vols
+    for volume in volumes:
+        if volume.tags:
+            volume.remove_tag('is_managed', True)
+            vol_count = vol_count + 1
+            continue
+        managed = True
+        for tag in volume.tags:
+            if tag == 'is_managed':
+                managed = False
+                break
+        if managed:
+            volume.remove_tag('is_managed', True)
+    if vol_count > 0:
+        if vol_count == 1:
+            print str(vol_count) + ' volume removed from autosnap'
+        else:
+            print str(vol_count) + ' volumes removed from autosnap'
+
+    return
+
+unmanage_all_vols(volumes)
+#manage_all_vols(volumes)
 
 '''
 # Date stuff
