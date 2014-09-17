@@ -6,7 +6,7 @@ The goal of this project is to create a stupidly simple tool for managing,
 among other features, cloud volumes and snapshots.  Ideally this tool would be
 used as a cloud backup solution by leveraging the power of snapshots.  If you
 are unfamiliar with snapshots, [take a look
-here](http://en.wikipedia.org/wiki/Snapshot_(computer_storage) to get started.
+here](http://en.wikipedia.org/wiki/Snapshot_(computer_storage)) to get started.
 
 This tool will not work very well with filesystems that do not have quiescing
 capabilites, ext4 and xfs are good exapmles.  For Windows support a VSS
