@@ -3,6 +3,13 @@
 A simple command line tool to for managing AWS volumes and
 snapshots.
 
+###Installation
+
+The easiest way to get up and running is to run `pip install -U autosnap`.
+Alternatively, you can fork/clone this project from github.  After it has been
+cloned, run `python setup.py develop` from the autosnap root directory and you
+should be good to go.
+
 ###Configuration
 
 You will need to create a default config in the root of this directory called
@@ -30,7 +37,15 @@ should be an `Account ID` which corresponds to the owner ID.
 
 ###Contributing
 
-Anybody is welcome to contribute to this project.
+Anybody is welcome to contribute to this project.  Inquiries can be directed to
+me via github issues or you are more than welcome to email me directly at
+`josh.reichardt@gmail.com`.
+
+###Usage
+
+The easiest way to get started using this tool after it has been installed and
+the config file has been created is to run `autosnap --help` to get a listing
+of all the commands and various options.
 
 ###TODO
 
@@ -38,7 +53,7 @@ Anybody is welcome to contribute to this project.
 * Logging
 * Ability to automatically generate config
 * Ability to create AMI from snapshot
-* Command line support
+* Extend command line capabilities
 
 ###License
 
