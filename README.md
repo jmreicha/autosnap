@@ -1,7 +1,17 @@
 #AWS snapshot tool
 
-A simple command line tool to for managing AWS volumes and
-snapshots.
+Many interesting things can be done with EBS volumes and snaphots.
+
+The goal of this project is to create a stupidly simple tool for managing,
+among other features, cloud volumes and snapshots.  Ideally this tool would be
+used as a cloud backup solution by leveraging the power of snapshots.  If you
+are unfamiliar with snapshots, [take a look
+here](http://en.wikipedia.org/wiki/Snapshot_(computer_storage) to get started.
+
+This tool will not work very well with filesystems that do not have quiescing
+capabilites, ext4 and xfs are good exapmles.  For Windows support a VSS
+provider would need to be implemented to quiesce Windows volumes for
+snapshotting.
 
 ###Installation
 
