@@ -3,18 +3,15 @@
 import logging
 import sys
 import boto.ec2
-from get_config import get_configuration
+import get_config
 
 logger = logging.getLogger(__name__)
-
-#c = get_config.get_configuration(config_file)
-#print c
 
 def get_connection():
     """ Connect to AWS """
 
-    config_file = '../.config'
-    c = get_config.get_configuration(config_file)
+    config = '../.config'
+    config = get_config.get_configuration(config)
 
     #logger.info('Connecting to AWS EC2 in {}'.format(config.get('region'))
 
@@ -27,7 +24,7 @@ def get_connection():
         logger.error('An error occurred when connecting to EC2')
         sys.exit(1)
 
-    return connection
+    return conn
 
 c = get_connection()
 print c
