@@ -3,22 +3,21 @@
 import boto.ec2
 import datetime
 import ConfigParser
+from get_config import get_configuration
 
 # Config
 config_file = '../.config'
-config = ConfigParser.ConfigParser()
-config.read(config_file)
-
-region = config.get('default', 'region')
-aws_access_key_id = config.get('default', 'aws_access_key_id')
-aws_secret_access_key = config.get('default', 'aws_secret_access_key')
-owner_id = config.get('default', 'owner_id')
+c = get_configuration(config_file)
+print c.get('owner_id')
 
 # Connection settings
-print 'Connecting to AWS'
 conn = boto.ec2.connect_to_region(region,
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key)
+
+print conn
+print "press 'c' when you are done with debugging"
+import pdb ; pdb.set_trace()  # breakpoint
 
 snapshots = conn.get_all_snapshots(filters={'owner-id': owner_id})
 volumes = conn.get_all_volumes()
@@ -118,9 +117,8 @@ def list_managed_vols(volumes):
 
     return
 
-
 #manage_all_vols(volumes)
-list_managed_vols(volumes)
+#list_managed_vols(volumes)
 #unmanage_all_vols(volumes)
 
 '''

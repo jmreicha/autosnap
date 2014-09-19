@@ -7,10 +7,7 @@ from ConfigParser import SafeConfigParser, NoOptionError
 logger = logging.getLogger(__name__)
 
 def get_configuration(filename):
-    """ Read configuration file
-    :type filename: str
-    :param filename: Path to the configuration file
-    """
+    """ Read config file"""
 
     logger.debug('Reading configuration from {}'.format(filename))
     conf = SafeConfigParser()
@@ -20,15 +17,22 @@ def get_configuration(filename):
         logger.error('Configuration file {} not found'.format(filename))
         sys.exit(1)
 
-    if not conf.has_section('general'):
-        logger.error('Missing [general] section in the configuration file')
+    if not conf.has_section('default'):
+        logger.error('Missing [default] section in the configuration file')
         sys.exit(1)
 
     try:
+
+        region = conf.get('default', 'region')
+        aws_access_key_id = conf.get('default', 'aws_access_key_id')
+        aws_secret_access_key = conf.get('default', 'aws_secret_access_key')
+        owner_id = conf.get('default', 'owner_id')
+
         config = {
-        'access-key-id': conf.get('general', 'access-key-id'),
-        'secret-access-key': conf.get('general', 'secret-access-key'),
-        'region': conf.get('general', 'region'),
+            'region': region,
+            'aws_access_key_id': aws_access_key_id,
+            'aws_secret_access_key': aws_secret_access_key,
+            'owner_id': owner_id
         }
 
     except NoOptionError as err:
@@ -36,3 +40,4 @@ def get_configuration(filename):
         sys.exit(1)
 
     return config
+

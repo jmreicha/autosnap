@@ -4,22 +4,6 @@ import boto.ec2
 import datetime
 import ConfigParser
 
-# Config
-config_file = '.config'
-config = ConfigParser.ConfigParser()
-config.read(config_file)
-
-region = config.get('default', 'region')
-aws_access_key_id = config.get('default', 'aws_access_key_id')
-aws_secret_access_key = config.get('default', 'aws_secret_access_key')
-owner_id = config.get('default', 'owner_id')
-
-# Connection settings
-print 'Connecting to AWS'
-conn = boto.ec2.connect_to_region(region,
-	aws_access_key_id=aws_access_key_id,
-	aws_secret_access_key=aws_secret_access_key)
-
 # Date stuff
 current_date = datetime.date.today().strftime("%j")
 expiration_date = int(datetime.date.today().strftime("%j")) + 7
