@@ -8,14 +8,6 @@ import ConfigParser
 current_date = datetime.date.today().strftime("%j")
 expiration_date = int(datetime.date.today().strftime("%j")) + 7
 
-volumes = conn.get_all_volumes()
-snapshots = conn.get_all_snapshots(filters={'volume-id': volume.id})
-tags = conn.get_all_tags()
-
-# Debugging
-# print "press 'c' when you are done with debugging"
-# import pdb ; pdb.set_trace()  # breakpoint once we've established our obj
-
 ### Volume level
 
 def manage_single_vol(volume):
@@ -43,7 +35,7 @@ def manage_all_vols(volumes):
             volume.add_tag('is_managed', True)
 
     if vol_count > 0:
-        if vol_count = 1:
+        if vol_count == 1:
             print str(vol_count) + ' volume added to autosnap'
         else:
             print str(vol_count) + ' volumes added to autosnap'
@@ -106,7 +98,7 @@ def vol_in_arrary(vol):
     return
 
 # When a snapshot gets created, add a 'date_created' tag
-first_snapshot.add_tag('date_created', "{0}".format(current_date))
+#first_snapshot.add_tag('date_created', "{0}".format(current_date))
 
 ### Snapshot level
 
@@ -131,7 +123,7 @@ def create_ami():
     """Create an AMI from a snapshot"""
 
 # When a snapshot gets created, add a 'retention' tag
-first_snapshot.add_tag('retention', '7')
+#first_snapshot.add_tag('retention', '7')
 
 # Run cleanup function to see if any snapshots are older than the expiration
 
