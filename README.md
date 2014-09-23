@@ -59,6 +59,16 @@ The easiest way to get started using this tool after it has been installed and
 the config file has been created is to run `autosnap --help` to get a listing
 of all the commands and various options.
 
+###Disclaimer
+
+The functionality of this code is currently expirmental so you should only run
+this at your own risk.  This will not destroy any data but it should be run if
+you know what you are doing, and with caution!
+
+This can potentially crete a loarge number of snapshots, which will cost extra
+against your AWS bill.  It shouldn't be a signficant amount but you should be
+aware that EBS volumes and snapshots aren't free.
+
 ###Contributing
 
 Anybody is welcome to contribute to this project.  Inquiries can be directed to

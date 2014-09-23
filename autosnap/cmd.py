@@ -19,7 +19,7 @@ class Main(Command):
         self.opt('--unmanage-vols', action='store_true',
                 help='unmanage all vols')
 
-        self.opt('--list-snaps',
+        self.opt('--list-snaps', action='store_true',
                 help='list managed snapshots')
 
         self.opt('--create-snaps', action='store_true',
@@ -28,7 +28,7 @@ class Main(Command):
         self.opt('--config',
                 help='override config file (default is ../.config)')
 
-        self.opt('--dry-run',
+        self.opt('--dry-run', action='store_true',
                 help='list snapshots that will be taken, does not create them')
 
         self.opt('--verbose', action='store_true',

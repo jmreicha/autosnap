@@ -110,8 +110,9 @@ def auto_create_snapshot(volumes):
             if tag == 'is_managed':
                 managed = True
             if managed:
-                desc = str(volume.id + ' ' + date)
+                desc = str(volume.id + '(' + date + ')')
                 snap = volume.create_snapshot(desc)
+                snap.add_tag('retention', '7')
 
     return
 
