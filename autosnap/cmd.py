@@ -1,9 +1,6 @@
 import logging
 from pytool.cmd import Command
-import ec2_connection
-import boto.ec2
 import helpers
-import get_config
 
 class Main(Command):
     """autosnap command line tool"""
@@ -14,10 +11,10 @@ class Main(Command):
                 help='list managed volumes')
 
         self.opt('--manage-vols', action='store_true',
-                help='manage all volumes in region with autosnap')
+                help='manage all volumes')
 
         self.opt('--unmanage-vols', action='store_true',
-                help='unmanage all vols')
+                help='unmanage all volumes')
 
         self.opt('--list-snaps', action='store_true',
                 help='list managed snapshots')
@@ -25,8 +22,8 @@ class Main(Command):
         self.opt('--create-snaps', action='store_true',
                 help='create a snapshot if it is managed')
 
-        self.opt('--config',
-                help='override config file (default is ../.config)')
+        self.opt('--remove-snaps', action='store_true',
+                help='create a snapshot if it is managed')
 
         self.opt('--dry-run', action='store_true',
                 help='list snapshots that will be taken, does not create them')
@@ -39,12 +36,7 @@ class Main(Command):
     def run(self):
 
         a = self.args
-        c = ec2_connection.get_connection()
-        conf = get_config.get_configuration('../.config')
-        owner_id = conf.get('owner_id')
-
-        volumes = c.get_all_volumes()
-        snapshots = c.get_all_snapshots(filters={'owner-id': owner_id})
+        volumes = helpers.list_vols()
 
         # List managed volumes
         if a.list_vols == True:
@@ -58,7 +50,11 @@ class Main(Command):
         if a.unmanage_vols == True:
             helpers.unmanage_all_vols(volumes)
 
-        # Create snapshots
+        # Create snapshots for managed volumes
         if a.create_snaps == True:
             helpers.auto_create_snapshot(volumes)
+
+        # List all snapshots
+        if a.list_snaps == True:
+            helpers.list_snapshots()
 

@@ -2,13 +2,22 @@
 
 import boto.ec2
 import datetime
-import ConfigParser
+import get_config
+import ec2_connection
 
 # Date stuff
-#current_date = datetime.date.today().strftime("%j")
+current_date = datetime.date.today().strftime("%j")
 #expiration_date = int(datetime.date.today().strftime("%j")) + 7
 
 ### Volume level
+
+def list_vols():
+    """Helper to return volumes"""
+
+    conn = ec2_connection.get_connection()
+    volumes = conn.get_all_volumes()
+
+    return volumes
 
 def manage_single_vol(volume):
     """Manage a volume in region"""
@@ -103,28 +112,43 @@ def auto_create_snapshot(volumes):
     """Automatically create a snpashot if it is managed"""
 
     print "Creating snapshots"
-    date = datetime.datetime.now().strftime('%m-%d-%y')
+    date = datetime.datetime.now()
 
     for volume in volumes:
         for tag in volume.tags:
             if tag == 'is_managed':
                 managed = True
             if managed:
-                desc = str(volume.id + '(' + date + ')')
+                desc = str(volume.id + '(' + date.strftime('%m-%d-%y') + ')')
+                # TODO check if a snapshot for date already exists
                 snap = volume.create_snapshot(desc)
-                snap.add_tag('retention', '7')
+                snap.add_tag('Name', '{0}'.format(desc))
+                snap.add_tag('date_created', '{0}'.format(date.strftime('%m-%d-%y')))
+                snap.add_tag('retention(days)', '7')
 
     return
 
-def list_snapshots(volumes):
-    "Print snapshots for each volume"""
+def list_snapshots():
+    """List all snapshots"""
 
-def auto_expire_snapshot(volume):
-    """Automatically expire a snapshot if it is older than its retention tag"""
+    # List only owner snapshots
+    conf = get_config.get_configuration('../.config')
+    owner_id = conf.get('owner_id')
+
+    conn = ec2_connection.get_connection()
+    snapshots = conn.get_all_snapshots(filters={'owner-id': owner_id})
+
+    for snap in snapshots:
+        print snap.tags
+
+    return
 
 def exipre_snapshots():
     """Manually trim snapshots"""
 
+    # get current date
+    # compare date to 7 day delta
+    # expire if snapshot is older than delta
     # trim_snapshots
 
 def list_managed_snapshots(snapshot):
@@ -132,9 +156,4 @@ def list_managed_snapshots(snapshot):
 
 def create_ami():
     """Create an AMI from a snapshot"""
-
-# When a snapshot gets created, add a 'retention' tag
-#first_snapshot.add_tag('retention', '7')
-
-# Run cleanup function to see if any snapshots are older than the expiration
 
