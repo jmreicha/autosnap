@@ -5,8 +5,8 @@ import datetime
 import ConfigParser
 
 # Date stuff
-current_date = datetime.date.today().strftime("%j")
-expiration_date = int(datetime.date.today().strftime("%j")) + 7
+#current_date = datetime.date.today().strftime("%j")
+#expiration_date = int(datetime.date.today().strftime("%j")) + 7
 
 ### Volume level
 
@@ -84,17 +84,14 @@ def list_managed_vols(volumes):
                 managed = True
                 managed_count = managed_count + 1
             if managed:
-                print 'Volume ID: ' + str(volume.id) + 'Volume tags: ' + str(volume.tags)
+                print 'Volume ID: ' + str(volume.id) + ' Volume size: ' + str(volume.size) + 'GB ' + ' Volume tags: '+ str(volume.tags)
 
     print str(managed_count) + ' total volumes managed'
 
     return
+
 def filter_vol_by_tag(volumes):
     """Filter volumes based on tags"""
-    return
-
-def vol_in_arrary(vol):
-    """Check to see if vol is part of an array"""
     return
 
 # When a snapshot gets created, add a 'date_created' tag
@@ -102,22 +99,35 @@ def vol_in_arrary(vol):
 
 ### Snapshot level
 
-def create_snapshot(volume):
-    """Manually create a snapshot for a vol"""
+def auto_create_snapshot(volumes):
+    """Automatically create a snpashot if it is managed"""
 
-def delete_snapshot(volume):
-    """Manually remove a snapshot for a vol"""
+    print "Creating snapshots"
+    date = datetime.datetime.now().strftime('%m-%d-%y')
 
-def auto_create_snapshot(volume):
-    """Automatically create a snpashot if it is managed by our tool"""
+    for volume in volumes:
+        for tag in volume.tags:
+            if tag == 'is_managed':
+                managed = True
+            if managed:
+                desc = str(volume.id + ' ' + date)
+                snap = volume.create_snapshot(desc)
 
-def auto_delete_snapshot(volume):
+    return
+
+def list_snapshots(volumes):
+    "Print snapshots for each volume"""
+
+def auto_expire_snapshot(volume):
     """Automatically expire a snapshot if it is older than its retention tag"""
+
+def exipre_snapshots():
+    """Manually trim snapshots"""
+
+    # trim_snapshots
 
 def list_managed_snapshots(snapshot):
     """Enumerate managed snapshots in region"""
-
-    counter = 0
 
 def create_ami():
     """Create an AMI from a snapshot"""
