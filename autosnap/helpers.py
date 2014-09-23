@@ -151,9 +151,6 @@ def exipre_snapshots():
     # expire if snapshot is older than delta
     # trim_snapshots
 
-def list_managed_snapshots(snapshot):
-    """Enumerate managed snapshots in region"""
-
 def create_ami():
     """Create an AMI from a snapshot"""
 
