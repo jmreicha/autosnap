@@ -9,9 +9,7 @@ import ec2_connection
 def get_stats():
     """Helper for listing autosnap stats"""
 
-    #number of snapshots
-
-    #volumes managed
+    # Volumes
     conn = ec2_connection.get_connection()
     volumes = conn.get_all_volumes()
 
@@ -20,14 +18,23 @@ def get_stats():
     for volume in volumes:
         vol_count = vol_count + 1
 
-    # Region info
+    # Snapshots
+    snapshots = conn.get_all_snapshots(filters={'owner-id': owner_id})
+
+    snap_count = 0
+
+    for snap in snapshots:
+        snap_count = snap_count + 1
+
+    # Region
     conf = get_config.get_configuration('../.config')
     region = conf.get('region')
 
     print 'autosnap stats'
     print '##############\n'
-    print 'Region:          ' + '%15s' % (region)
-    print 'Volumes managed: ' + '%15s' % str(vol_count)
+    print 'Region:            ' + '%15s' % (region)
+    print 'Volumes managed:   ' + '%15s' % str(vol_count)
+    print 'Snapshots managed: ' + '%15s' % str(snap_count)
 
 ### Volume level
 
@@ -122,9 +129,6 @@ def list_managed_vols(volumes):
 def filter_vol_by_tag(volumes):
     """Filter volumes based on tags"""
     return
-
-# When a snapshot gets created, add a 'date_created' tag
-#first_snapshot.add_tag('date_created', "{0}".format(current_date))
 
 ### Snapshot level
 
