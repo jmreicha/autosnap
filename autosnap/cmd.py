@@ -1,6 +1,6 @@
-import logging
 from pytool.cmd import Command
 import helpers
+import os
 
 class Main(Command):
     """autosnap command line tool"""
@@ -37,6 +37,18 @@ class Main(Command):
 
         a = self.args
         volumes = helpers.list_vols()
+
+        # Default behavior prints useful info
+        helpers.get_stats()
+
+        ### TODO Create config if missing
+        if not os.path.isfile('../.config'):
+            print 'no config file found.  Would you like to create one?'
+
+        # get region
+        # get aws_access_key
+        # get aws_secret_key
+        # create/open ../.config and update or create these vars
 
         # List managed volumes
         if a.list_vols == True:

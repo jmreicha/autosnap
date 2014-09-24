@@ -1,13 +1,33 @@
 '''Autosnap - volume and snapshot lifecycle management tool'''
 
-import boto.ec2
 import datetime
 import get_config
 import ec2_connection
 
-# Date stuff
-current_date = datetime.date.today().strftime("%j")
-#expiration_date = int(datetime.date.today().strftime("%j")) + 7
+### Get statistics
+
+def get_stats():
+    """Helper for listing autosnap stats"""
+
+    #number of snapshots
+
+    #volumes managed
+    conn = ec2_connection.get_connection()
+    volumes = conn.get_all_volumes()
+
+    vol_count = 0
+
+    for volume in volumes:
+        vol_count = vol_count + 1
+
+    # Region info
+    conf = get_config.get_configuration('../.config')
+    region = conf.get('region')
+
+    print 'autosnap stats'
+    print '##############\n'
+    print 'Region:          ' + '%15s' % (region)
+    print 'Volumes managed: ' + '%15s' % str(vol_count)
 
 ### Volume level
 
