@@ -2,23 +2,20 @@
 
 import logging
 import sys
-from ConfigParser import SafeConfigParser, NoOptionError
-
-logger = logging.getLogger(__name__)
+from ConfigParser import SafeConfigParser, NoOptionError, ConfigParser
 
 def get_configuration(filename):
-    """ Read config file"""
+    """Read config file"""
 
-    logger.debug('Reading configuration from {}'.format(filename))
     conf = SafeConfigParser()
     conf.read(filename)
 
     if not conf:
-        logger.error('Configuration file {} not found'.format(filename))
+        print 'Configuration file {} not found'.format(filename))
         sys.exit(1)
 
     if not conf.has_section('default'):
-        logger.error('Missing [default] section in the configuration file')
+        print 'Missing [default] section in the configuration file'
         sys.exit(1)
 
     try:
@@ -36,8 +33,25 @@ def get_configuration(filename):
         }
 
     except NoOptionError as err:
-        logger.error('Error in config file: {}'.format(err))
+        print 'Error in config file: {}'.format(err)
         sys.exit(1)
 
     return config
+
+def set_configuration(aws_region, aws_access_key_id, aws_secret_access_key, owner_id):
+    """Write config file"""
+
+    conf = ConfigParser()
+
+    conf.add_section('default')
+    conf.set('default', 'region', str(aws_region))
+    conf.set('default', 'aws_access_key_id', str(aws_access_key_id))
+    conf.set('default', 'aws_secret_access_key', str(aws_secret_access_key))
+    conf.set('default', 'owner_id', str(owner_id))
+
+    # Write config to file
+    with open('../.config', 'wb') as configfile:
+        conf.write(configfile)
+
+    return conf
 

@@ -59,6 +59,24 @@ The easiest way to get started using this tool after it has been installed and
 the config file has been created is to run `autosnap --help` to get a listing
 of all the commands and various options.
 
+Autosnap will detect if a configuration is present and prompt the user to
+create one if it can't find one.  Users should follow the input prompts to
+create a configuration.
+
+After creating a config, running autosnap without any parameters will list
+stats and information about your AWS volume and snapshot environment by
+default.  For example, typing the 'autosnap' command after installation will
+print out details about your environment.
+
+```
+$ autosnap
+Autosnap stats
+
+Current region:          us-west-1
+Volumes managed:                 1
+Snapshots managed:               1
+```
+
 ###Disclaimer
 
 The functionality of this code is currently expirmental so you should only run
