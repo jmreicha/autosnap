@@ -9,8 +9,10 @@ import ec2_connection
 def get_stats():
     """Helper for listing autosnap stats"""
 
-    # Volumes
+    conf = get_config.get_configuration('../.config')
     conn = ec2_connection.get_connection()
+
+    # Volumes
     volumes = conn.get_all_volumes()
 
     vol_count = 0
@@ -19,6 +21,7 @@ def get_stats():
         vol_count = vol_count + 1
 
     # Snapshots
+    owner_id = conf.get('owner_id')
     snapshots = conn.get_all_snapshots(filters={'owner-id': owner_id})
 
     snap_count = 0
@@ -27,12 +30,10 @@ def get_stats():
         snap_count = snap_count + 1
 
     # Region
-    conf = get_config.get_configuration('../.config')
     region = conf.get('region')
 
-    print 'autosnap stats'
-    print '##############\n'
-    print 'Region:            ' + '%15s' % (region)
+    print 'Autosnap stats\n'
+    print 'Current region:    ' + '%15s' % (region)
     print 'Volumes managed:   ' + '%15s' % str(vol_count)
     print 'Snapshots managed: ' + '%15s' % str(snap_count)
 
