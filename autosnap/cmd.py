@@ -7,6 +7,10 @@ class Main(Command):
 
     def set_opts(self):
         """Command line options"""
+
+        self.opt('--config', action='store_true',
+                help='create or modify configuration file')
+
         self.opt('--list-vols', action='store_true',
                 help='list managed volumes')
 
@@ -38,17 +42,29 @@ class Main(Command):
         a = self.args
         volumes = helpers.list_vols()
 
+        # Create config if missing
+        if not os.path.isfile('../.config'):
+            print 'no config file found\n'
+            aws_key_id = raw_input('AWS Access Key ID: ')
+            aws_access_key = raw_input('AWS Secret Access Key: ')
+            default_region = raw_input('Default region name: ')
+            owner_id = raw_input('Owner ID: ')
+
+            # create/update config
+            get_config.set_configuration(default_region, aws_key_id, aws_access_key, owner_id)
+
         # Default behavior
         helpers.get_stats()
 
-        ### TODO Create config if missing
-        if not os.path.isfile('../.config'):
-            print 'no config file found.  Would you like to create one?'
+        # Update config
+        if a.config == True:
+            aws_key_id = raw_input('AWS Access Key ID: ')
+            aws_access_key = raw_input('AWS Secret Access Key: ')
+            default_region = raw_input('Default region name: ')
+            owner_id = raw_input('Owner ID: ')
 
-        # get region
-        # get aws_access_key
-        # get aws_secret_key
-        # create/open ../.config and update or create these vars
+            # create/update config
+            get_config.set_configuration(default_region, aws_key_id, aws_access_key, owner_id)
 
         # List managed volumes
         if a.list_vols == True:
