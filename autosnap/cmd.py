@@ -38,7 +38,7 @@ class Main(Command):
         a = self.args
         volumes = helpers.list_vols()
 
-        # Default behavior prints useful info
+        # Default behavior
         helpers.get_stats()
 
         ### TODO Create config if missing

@@ -11,7 +11,7 @@ def get_configuration(filename):
     conf.read(filename)
 
     if not conf:
-        print 'Configuration file {} not found'.format(filename))
+        print 'Configuration file {} not found'.format(filename)
         sys.exit(1)
 
     if not conf.has_section('default'):
@@ -43,6 +43,7 @@ def set_configuration(aws_region, aws_access_key_id, aws_secret_access_key, owne
 
     conf = ConfigParser()
 
+    # Populate config
     conf.add_section('default')
     conf.set('default', 'region', str(aws_region))
     conf.set('default', 'aws_access_key_id', str(aws_access_key_id))
