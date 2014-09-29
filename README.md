@@ -41,17 +41,17 @@ owner_id = xxx
 
 Where `region` is the default region to use for this tool, `aws_access_key_id`
 is the ID for the specific user that will interface with AWS,
-`aws_secret_access_key` is the associated key for the ID and `owner_id` is the associated
-AWS account that contains the snapshots and volumes to work with.
+`aws_secret_access_key` is the associated key for the ID and `owner_id` is the
+associated AWS account that contains the snapshots and volumes to work with.
 
-This config can be overriden on the command line by passing the `-c` or
-`--config` flags to the tool (not implemented yet!  I will update when it is
-completed).  By default the config is expected to be placed in the root of this
-project in a file called `.config`.
+This config can be update on the fly from the command line by passing the
+`--config` flag to the tool.  By default the config is expected to be placed in
+the root of this project in a file called `.config`, and one will be created
+there if it cannot be found.
 
-**Note** You can obtain your AWS owner_id by navigating to the AWS management console,
-selecting your user account then `My Account`.  Under account settings there
-should be an `Account ID` which corresponds to the owner ID.
+**Note** You can obtain your AWS owner_id by navigating to the AWS management
+console, selecting your user account then `My Account`.  Under account settings
+there should be an `Account ID` which corresponds to the owner ID.
 
 ###Usage
 
@@ -97,9 +97,7 @@ me via github issues or you are more than welcome to email me directly at
 
 * Error checking
 * Logging
-* Ability to automatically generate config
 * Ability to create AMI from snapshot
-* Extend command line capabilities
 
 ###License
 

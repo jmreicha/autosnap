@@ -1,5 +1,6 @@
 from pytool.cmd import Command
 import helpers
+import get_config
 import os
 
 class Main(Command):
@@ -40,20 +41,19 @@ class Main(Command):
     def run(self):
 
         a = self.args
-        volumes = helpers.list_vols()
 
         # Create config if missing
         if not os.path.isfile('../.config'):
             print 'no config file found\n'
+            default_region = raw_input('Default region name: ')
             aws_key_id = raw_input('AWS Access Key ID: ')
             aws_access_key = raw_input('AWS Secret Access Key: ')
-            default_region = raw_input('Default region name: ')
             owner_id = raw_input('Owner ID: ')
 
-            # create/update config
             get_config.set_configuration(default_region, aws_key_id, aws_access_key, owner_id)
 
         # Default behavior
+        volumes = helpers.list_vols()
         helpers.get_stats()
 
         # Update config
