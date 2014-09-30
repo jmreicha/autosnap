@@ -54,7 +54,7 @@ def set_configuration(aws_region, aws_access_key_id, aws_secret_access_key, owne
     else:
         conf.set('aws_default', 'owner_id', str(owner_id))
 
-    # Write config to file
+    # Write config
     with open('../.config', 'wb') as configfile:
         conf.write(configfile)
 

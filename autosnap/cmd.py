@@ -51,10 +51,7 @@ class Main(Command):
             owner_id = raw_input('Owner ID: ')
 
             get_config.set_configuration(default_region, aws_key_id, aws_access_key, owner_id)
-
-        # Default behavior
-        volumes = helpers.list_vols()
-        helpers.get_stats()
+            return
 
         # Update config
         if a.config == True:
@@ -65,24 +62,36 @@ class Main(Command):
 
             # create/update config
             get_config.set_configuration(default_region, aws_key_id, aws_access_key, owner_id)
+            return
+
+        volumes = helpers.list_vols()
 
         # List managed volumes
         if a.list_vols == True:
              helpers.list_managed_vols(volumes)
+             return
 
         # Manage all volumes
         if a.manage_vols == True:
              helpers.manage_all_vols(volumes)
+             return
 
         # Unmanage all volumes
         if a.unmanage_vols == True:
             helpers.unmanage_all_vols(volumes)
+            return
 
         # Create snapshots for managed volumes
         if a.create_snaps == True:
             helpers.auto_create_snapshot(volumes)
+            return
 
         # List all snapshots
         if a.list_snaps == True:
             helpers.list_snapshots()
+            return
+
+        # TODO only print if config not changed
+        # Print stats if nothing gets called
+        helpers.get_stats()
 
