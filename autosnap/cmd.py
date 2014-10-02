@@ -60,7 +60,6 @@ class Main(Command):
             default_region = raw_input('Default region name: ')
             owner_id = raw_input('Owner ID: ')
 
-            # create/update config
             get_config.set_configuration(default_region, aws_key_id, aws_access_key, owner_id)
             return
 
@@ -88,7 +87,12 @@ class Main(Command):
 
         # List all snapshots
         if a.list_snaps == True:
-            helpers.list_snapshots()
+            helpers.print_snapshots()
+            return
+
+        # Remove managed snapshots
+        if a.remove_snaps == True:
+            helpers.delete_snapshots()
             return
 
         # TODO only print if config not changed

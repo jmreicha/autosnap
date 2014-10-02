@@ -127,10 +127,6 @@ def list_managed_vols(volumes):
 
     return
 
-def filter_vol_by_tag(volumes):
-    """Filter volumes based on tags"""
-    return
-
 ### Snapshot level
 
 def auto_create_snapshot(volumes):
@@ -145,7 +141,7 @@ def auto_create_snapshot(volumes):
                 managed = True
             if managed:
                 desc = str(volume.id + '(' + date.strftime('%m-%d-%y') + ')')
-                # TODO check if a snapshot for date already exists
+                # TODO check if snapshot for today's date already exists
                 snap = volume.create_snapshot(desc)
                 snap.add_tag('Name', '{0}'.format(desc))
                 snap.add_tag('date_created', '{0}'.format(date.strftime('%m-%d-%y')))
@@ -153,8 +149,8 @@ def auto_create_snapshot(volumes):
 
     return
 
-def list_snapshots():
-    """List all snapshots"""
+def print_snapshots():
+    """Print all snapshots"""
 
     # List only owner snapshots
     conf = get_config.get_configuration('../.config')
@@ -168,14 +164,39 @@ def list_snapshots():
 
     return
 
-def exipre_snapshots():
-    """Manually trim snapshots"""
+def get_snapshots():
+    """List all snapshots"""
 
-    # get current date
-    # compare date to 7 day delta
-    # expire if snapshot is older than delta
-    # trim_snapshots
+    # List only owner snapshots
+    conf = get_config.get_configuration('../.config')
+    owner_id = conf.get('owner_id')
 
-def create_ami():
+    conn = ec2_connection.get_connection()
+    snapshots = conn.get_all_snapshots(filters={'owner-id': owner_id})
+
+    return snapshots
+
+def delete_snapshots():
+    """Expire snapshots"""
+
+    # Current date
+    date = datetime.datetime.now()
+
+    # Get snapshots
+    snapshots = get_snapshots()
+
+    for snap in snapshots:
+
+        retention = int(snap.tags['retention(days)']
+        expiration = date - timedelta(days=retention)
+
+        # Remove if older than expiration value
+        if date + retention > expiration:
+            print 'Deleting snapshot {}'.format(snap.id)
+            snap.delete()
+
+    return
+
+def create_ami(snap_id):
     """Create an AMI from a snapshot"""
 
