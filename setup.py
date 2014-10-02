@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='autosnap',
-    version='0.0.1',
+    version='0.1.0',
     author='Joshua Reichardt',
     author_email='josh.reichardt@gmail.com',
     description='A command line tool for managing AWS volumes and snapshots',
