@@ -1,6 +1,8 @@
 '''Autosnap - volume and snapshot lifecycle management tool'''
 
 import datetime
+from datetime import timedelta
+from dateutil.parser import parse as parse_date
 import get_config
 import ec2_connection
 
@@ -180,20 +182,28 @@ def delete_snapshots():
     """Expire snapshots"""
 
     # Current date
-    date = datetime.datetime.now()
+    current_date = datetime.datetime.now()
+    #current_date = date.replace(tzinfo=None)
 
     # Get snapshots
     snapshots = get_snapshots()
 
     for snap in snapshots:
 
-        retention = int(snap.tags['retention(days)']
-        expiration = date - timedelta(days=retention)
+        snap_date = parse_date(snap.start_time)
+        snap_date = snap_date.replace(tzinfo=None)
 
-        # Remove if older than expiration value
-        if date + retention > expiration:
-            print 'Deleting snapshot {}'.format(snap.id)
-            snap.delete()
+        if snap.tags.get('retention(days)') is None:
+            retention = 0
+        else:
+            retention = snap.tags.get('retention(days)')
+            expiration = current_date - timedelta(days=int(retention))
+
+            if retention == 0:
+                pass
+            elif snap_date < expiration:
+                print 'Deleting snapshot {}'.format(snap.id)
+                snap.delete()
 
     return
 

@@ -11,7 +11,7 @@ setup(
     description='A command line tool for managing AWS volumes and snapshots',
     long_description=open('README.md').read(),
     url='https://github.com/jmreicha/autosnap',
-    install_requires=['pytool', 'boto'],
+    install_requires=['pytool', 'boto', 'python-dateutil'],
     entry_points={
         'console_scripts':[
             'autosnap = autosnap.cmd:Main.console_script',
