@@ -183,7 +183,7 @@ def delete_snapshots():
 
     # Current date
     current_date = datetime.datetime.now()
-    #current_date = date.replace(tzinfo=None)
+    current_date = current_date.replace(tzinfo=None)
 
     # Get snapshots
     snapshots = get_snapshots()
