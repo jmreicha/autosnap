@@ -30,12 +30,6 @@ class Main(Command):
         self.opt('--remove-snaps', action='store_true',
                 help='create a snapshot if it is managed')
 
-        self.opt('--dry-run', action='store_true',
-                help='list snapshots that will be taken, does not create them')
-
-        self.opt('--verbose', action='store_true',
-                help='Increase verbosity')
-
         self.opt('--version', action='version', version='0.0.1')
 
     def run(self):

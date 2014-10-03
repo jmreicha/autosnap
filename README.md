@@ -13,6 +13,9 @@ capabilites, ext4 and xfs are good exapmles.  For Windows support a VSS
 provider would need to be implemented to quiesce Windows volumes for
 snapshotting.
 
+If you're interested, I wrote a blog post with some more [detail and use cases
+here](http://thepracticalsysadmin.com/autosnap-aws-snapshot-and-volume-management-tool/).
+
 ###Installation
 
 The easiest way to get up and running is to run 
