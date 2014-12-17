@@ -98,9 +98,10 @@ me via github issues or you are more than welcome to email me directly at
 
 ###TODO
 
-* Error checking
-* Logging
-* Ability to create AMI from snapshot
+- [ ] Improve error checking and handling
+- [ ] Improve logging
+- [ ] Ability to create AMI from snapshot
+- [ ] Add tests and test framework
 
 ###License
 
