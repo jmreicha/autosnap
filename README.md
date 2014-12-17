@@ -102,6 +102,7 @@ me via github issues or you are more than welcome to email me directly at
 - [ ] Improve logging
 - [ ] Ability to create AMI from snapshot
 - [ ] Add tests and test framework
+- [ ] Thicken out usage section of README
 
 ###License
 
